@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="WebRes\**" />
+    <EmbeddedResource Remove="WebRes\**" />
+    <None Remove="WebRes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Helper\Setting.cs" />
   </ItemGroup>
 
@@ -15,10 +21,6 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1108.44" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="WebRes\" />
   </ItemGroup>
 
 </Project>
