@@ -16,6 +16,7 @@ namespace MyWidget
 
         public ResourceHandler(CoreWebView2Environment env)
         {
+
             this.env = env;
         }
 

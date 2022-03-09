@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Compile Remove="Helper\Setting.cs" />
+    <Compile Remove="WindowBlur.cs" />
   </ItemGroup>
 
   <ItemGroup>

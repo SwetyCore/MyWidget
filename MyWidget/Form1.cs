@@ -45,13 +45,22 @@ namespace MyWidget
 #else
         string WebRoot = "";
 #endif
+        
         public Form1()
         {
             InitializeComponent();
+
+            IntPtr hWnd = this.Handle;
+
+            var attribute = DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE;
+            var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
+            DwmSetWindowAttribute(hWnd, attribute, ref preference, sizeof(uint));
+
             int workWidth = Screen.PrimaryScreen.WorkingArea.Width;
             int workHeight = Screen.PrimaryScreen.WorkingArea.Height;
-            Location = new Point(workWidth-600, 0);
-            Size = new Size(600, workHeight);
+            Location = new Point(workWidth-605, 5);
+            Size = new Size(600, workHeight-10);
+
             WebRoot = Path.Combine(Application.StartupPath, "WebRoot"); 
             if (!File.Exists(Path.Combine(WebRoot,"index.html")))
             {
@@ -60,9 +69,36 @@ namespace MyWidget
             }
         }
 
+        #region 圆角支持相关
+
+        public enum DWMWINDOWATTRIBUTE
+        {
+            DWMWA_WINDOW_CORNER_PREFERENCE = 33
+        }
+
+        // The DWM_WINDOW_CORNER_PREFERENCE enum for DwmSetWindowAttribute's third parameter, which tells the function
+        // what value of the enum to set.
+        public enum DWM_WINDOW_CORNER_PREFERENCE
+        {
+            DWMWCP_DEFAULT = 0,
+            DWMWCP_DONOTROUND = 1,
+            DWMWCP_ROUND = 2,
+            DWMWCP_ROUNDSMALL = 3
+        }
+
+        // Import dwmapi.dll and define DwmSetWindowAttribute in C# corresponding to the native function.
+        [DllImport("dwmapi.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern long DwmSetWindowAttribute(IntPtr hwnd,
+                                                         DWMWINDOWATTRIBUTE attribute,
+                                                         ref DWM_WINDOW_CORNER_PREFERENCE pvAttribute,
+                                                         uint cbAttribute);
+        #endregion
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            WindowStyle.EnableBlur(this.Handle);
             this.notifyIcon1.Visible = true;
+
             webViewControl = new WebView2();
             Task<CoreWebView2Environment> createEnvTask = CoreWebView2Environment.CreateAsync(userDataFolder: Path.GetFullPath("app\\data\\cefdata"));
             createEnvTask.Wait();
@@ -73,6 +109,8 @@ namespace MyWidget
             webViewControl.CoreWebView2InitializationCompleted += WebView2_CoreWebView2InitializationCompleted;
 
         }
+
+        #region WebView2
         void initWebView2()
         {
             webView.Settings.IsPinchZoomEnabled = false;
@@ -161,6 +199,8 @@ namespace MyWidget
                 }
             }
         }
+
+        #endregion
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
