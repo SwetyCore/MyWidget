@@ -1,10 +1,13 @@
 # MyWidget
 
 DIY 你的 Windows小部件
+```diff 
+- 当前版本为预发行版本，目前存在较多的bug，若无法接受请等待稳定版本发布后再进行下载！！！！
+``` 
 <small>*这个readme并不完整，等待完善ing</small>
 
 # 预览
-![](Preview\8.jpg)
+![](Preview/8.jpg)
 ## 使用方法：
 下载Realease解压到任意文件夹下运行即可。
 
