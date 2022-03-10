@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MyWidget
 {
-    internal class NeteaseCloudMusic
+    public class NeteaseCloudMusic
     {
         public IntPtr playerhwnd;
 
