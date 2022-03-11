@@ -107,6 +107,7 @@
             this.Controls.Add(this.webView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
+            this.ShowInTaskbar = false;
             this.Text = "Form1";
             this.TransparencyKey = System.Drawing.SystemColors.Control;
             this.Deactivate += new System.EventHandler(this.Form1_Deactivate);

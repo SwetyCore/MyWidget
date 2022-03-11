@@ -1,5 +1,6 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using MyWidget;
+using MyWidgetDemo;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,6 @@ namespace MyWidget
     {
 
 
-        ScriptCallbackObject internalApi;
 
 
 
@@ -52,6 +52,8 @@ namespace MyWidget
             InitializeAsync();
 
             WebRoot = Path.Combine(Application.StartupPath, "WebRoot");
+
+            autoHide = Setting.Default.AutoHide;
 
             this.自动隐藏ToolStripMenuItem.Text = $"自动隐藏:{autoHide}";
         }
@@ -94,13 +96,18 @@ namespace MyWidget
         {
             this.TransparencyKey = Color.Snow;
 
-            EnableBlur(this.Handle);
+            if (Setting.Default.BlurWindow)
+            {
+                EnableBlur(this.Handle);
+            }
         }
 
         private void 自动隐藏ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             autoHide = !autoHide;
             this.自动隐藏ToolStripMenuItem.Text = $"自动隐藏:{autoHide}";
+            Setting.Default.AutoHide = autoHide;
+            Setting.Default.Save();
 
         }
 

@@ -14,13 +14,14 @@ using DGP.Genshin.GamebarWidget.Model;
 using Newtonsoft.Json;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using MyWidgetDemo;
 
 namespace MyWidget
 {
     [ComVisible(true)]
     public class ScriptCallbackObject
     {
-        public string apiver { get; set; } = "1.0.0.1";
+        public string apiver { get; set; } = "1.0.0.2";
 
         SysParams sysParams = new SysParams();
         List<RoleAndNote> roleAndNotes = new List<RoleAndNote>();
@@ -57,6 +58,18 @@ namespace MyWidget
                 resinCount = 0;
             }
 
+        }
+        public string EnableBlur(bool arg=true,bool set=false)
+        {
+            
+            if (set)
+            {
+                Setting.Default.BlurWindow = arg;
+                Setting.Default.Save();
+            }
+            JObject o=new JObject();
+            o["data"] = Setting.Default.BlurWindow;
+            return o.ToString();
         }
 
         public void runcmd(string cmd)
